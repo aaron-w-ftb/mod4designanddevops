@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 # mod4designanddevops
-Repo for final day task for mod4 Design and Dev Ops
+
+=======
+# silver-train
+>>>>>>> e3f5e85 (Initial commit)
