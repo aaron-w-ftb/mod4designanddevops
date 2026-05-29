@@ -1,9 +1,20 @@
-from app import app
+import requests
+import unittest
 
-def test_home():
-    client = app.test_client()
+class FlaskAppTests(unittest.TestCase):
 
-    response = client.get('/')
+    BASE_URL = "http://localhost:80"
 
-    assert response.status_code == 200
-    assert b"Hello :)" in response.data
+    def test_home_page(self):
+
+        response = requests.get(f"{self.BASE_URL}/")
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn("Hello", response.text)
+
+        self.assertIn("I'm currently running in", response.text)
+
+if __name__ == "__main__":
+    unittest.main()
+
