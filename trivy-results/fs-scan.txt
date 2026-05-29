@@ -1,0 +1,45 @@
+
+Report Summary
+
+┌──────────────────┬──────┬─────────────────┬─────────┐
+│      Target      │ Type │ Vulnerabilities │ Secrets │
+├──────────────────┼──────┼─────────────────┼─────────┤
+│ requirements.txt │ pip  │        7        │    -    │
+└──────────────────┴──────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+requirements.txt (pip)
+======================
+Total: 7 (UNKNOWN: 0, LOW: 0, MEDIUM: 6, HIGH: 1, CRITICAL: 0)
+
+┌──────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────────┐
+│ Library  │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                            Title                             │
+├──────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────────┤
+│ Werkzeug │ CVE-2024-34069 │ HIGH     │ fixed  │ 2.3.7             │ 3.0.3         │ Werkzeug is a comprehensive WSGI web application library.    │
+│          │                │          │        │                   │               │ The debugger ...                                             │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-34069                   │
+│          ├────────────────┼──────────┤        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2023-46136 │ MEDIUM   │        │                   │ 3.0.1, 2.3.8  │ python-werkzeug: high resource consumption leading to denial │
+│          │                │          │        │                   │               │ of service                                                   │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2023-46136                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2024-49766 │          │        │                   │ 3.0.6         │ Werkzeug safe_join not safe on Windows                       │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-49766                   │
+│          ├────────────────┤          │        │                   │               ├──────────────────────────────────────────────────────────────┤
+│          │ CVE-2024-49767 │          │        │                   │               │ Werkzeug is a Web Server Gateway Interface web application   │
+│          │                │          │        │                   │               │ library. Ap ......                                           │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-49767                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2025-66221 │          │        │                   │ 3.1.4         │ Werkzeug safe_join() allows Windows special device names     │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2025-66221                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2026-21860 │          │        │                   │ 3.1.5         │ Werkzeug safe_join() allows Windows special device names     │
+│          │                │          │        │                   │               │ with compound extensions                                     │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-21860                   │
+│          ├────────────────┤          │        │                   ├───────────────┼──────────────────────────────────────────────────────────────┤
+│          │ CVE-2026-27199 │          │        │                   │ 3.1.6         │ Werkzeug safe_join() allows Windows special device names     │
+│          │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2026-27199                   │
+└──────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────────┘

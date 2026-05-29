@@ -3,7 +3,7 @@ pipeline {
 
     options {
         timestamps()
-        timeout(time: 10, unit: 'MINUTES')
+        timeout(time: 15, unit: 'MINUTES')
     }
 
     stages {
@@ -18,6 +18,24 @@ pipeline {
         stage('Set-Up') {
             steps {
                 sh 'docker network create silver-network || true'
+                sh 'mkdir -p trivy-results'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                sh '''
+		python3 -m venv venv
+		. venv/bin/activate
+		pip install -r requirements.txt
+		pytest
+		'''
+            }
+        }
+
+        stage('Trivy FS Scan') {
+            steps {
+                sh 'trivy fs . > trivy-results/fs-scan.txt'
             }
         }
 
@@ -25,6 +43,12 @@ pipeline {
             steps {
                 sh 'docker build -t flask-app .'
                 sh 'docker build -t nginx-proxy ./nginx'
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            steps {
+                sh 'trivy image flask-app > trivy-results/image-scan.txt'
             }
         }
 
@@ -52,7 +76,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker ps -a'
+            archiveArtifacts artifacts: 'trivy-results/*.txt', allowEmptyArchive: true
         }
     }
 }
