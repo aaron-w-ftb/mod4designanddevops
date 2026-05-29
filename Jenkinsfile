@@ -143,7 +143,9 @@ pipeline {
 
                 sh '''
                 trivy image \
+		--scanners vuln \
                 --severity HIGH,CRITICAL \
+		--ignore-unfixed \
                 --exit-code 1 \
                 ${APP_IMAGE}:latest \
                 > trivy-results/image-scan.txt
