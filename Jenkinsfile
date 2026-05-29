@@ -1,36 +1,58 @@
-pipeline{
+pipeline {
     agent any
 
-    // environment{}
-    // paramters{}
-    options{
+    options {
         timestamps()
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
     }
-    stages{
-        stage("make directory"){
-            options{
-                retry(2)
-            }
-            steps{
-                sh """
-                    if [ ! -d ~/jenkins-pipeline-example ]; then
-                        mkdir ~/jenkins-pipeline-example
-                        else
-                            echo "not built/already exists"
-                    fi
-                """
+
+    stages {
+
+        stage('Clean-Up') {
+            steps {
+                sh 'docker rm -f flask-app || true'
+                sh 'docker rm -f nginx || true'
             }
         }
-        stage("adding a file"){
-            steps{
-                sh "touch ~/jenkins-pipeline-example/file1.txt"
+
+        stage('Set-Up') {
+            steps {
+                sh 'docker network create silver-network || true'
             }
         }
+
+        stage('Build Images') {
+            steps {
+                sh 'docker build -t flask-app .'
+                sh 'docker build -t nginx-proxy ./nginx'
+            }
+        }
+
+        stage('Run Containers') {
+            steps {
+
+                sh '''
+                docker run -d \
+                --name flask-app \
+                --network silver-network \
+                flask-app
+                '''
+
+                sh '''
+                docker run -d \
+                --name nginx \
+                --network silver-network \
+                -p 80:80 \
+                nginx-proxy
+                '''
+            }
+        }
+
     }
+
     post {
         always {
-            archiveArtifacts artifacts: '~/jenkins-pipeline-example/*.txt', allowEmptyArchive: true
+            sh 'docker ps -a'
         }
     }
 }
